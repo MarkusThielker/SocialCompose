@@ -19,6 +19,13 @@ dependencies {
 
     implementation(project(":shared"))
 
+    // Database dependencies
+    implementation("org.jetbrains.exposed:exposed:0.17.14")
+    implementation("com.impossibl.pgjdbc-ng:pgjdbc-ng:0.8.9")
+    implementation("org.mariadb.jdbc:mariadb-java-client:2.7.4")
+    implementation("mysql:mysql-connector-java:8.0.26")
+
+    // Ktor dependencies
     implementation("io.ktor:ktor-server-core:$ktorVersion")
     implementation("io.ktor:ktor-auth:$ktorVersion")
     implementation("io.ktor:ktor-auth-jwt:$ktorVersion")

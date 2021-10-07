@@ -2,6 +2,7 @@ package com.example.social_compose.server
 
 import com.example.social_compose.server.ServerConfig.host
 import com.example.social_compose.server.ServerConfig.port
+import com.example.social_compose.server.plugins.configureDatabase
 import com.example.social_compose.server.plugins.configureSecurity
 import io.ktor.application.*
 import io.ktor.features.*
@@ -22,6 +23,7 @@ fun main(args: Array<String>) {
             }
         }
 
+        configureDatabase()
         configureSecurity()
 
     }.start(wait = true)
