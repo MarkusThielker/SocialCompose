@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "properties": {
+    "username": {
+      "$id": "#/properties/username",
+      "maxLength": 16,
+      "minLength": 3,
+      "pattern": "\\w{3,16}",
+      "type": "string"
+    },
+    "email": {
+      "$id": "#/properties/email",
+      "maxLength": 100,
+      "pattern": "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-z]{2,4}",
+      "type": "string"
+    },
+    "password": {
+      "$id": "#/properties/password",
+      "maxLength": 256,
+      "minLength": 8,
+      "type": "string"
+    },
+    "alias": {
+      "$id": "#/properties/alias",
+      "maxLength": 50,
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "username",
+    "email",
+    "password",
+    "alias"
+  ],
+  "additionalProperties": true
+}

@@ -25,6 +25,12 @@ dependencies {
     implementation("org.mariadb.jdbc:mariadb-java-client:2.7.4")
     implementation("mysql:mysql-connector-java:8.0.26")
 
+    // Encryption
+    implementation("org.mindrot:jbcrypt:0.4")
+
+    // JSON Schema validation
+    implementation("org.everit.json:org.everit.json.schema:1.3.0")
+
     // Ktor dependencies
     implementation("io.ktor:ktor-server-core:$ktorVersion")
     implementation("io.ktor:ktor-auth:$ktorVersion")
