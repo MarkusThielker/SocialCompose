@@ -29,7 +29,7 @@ dependencies {
     implementation("org.mindrot:jbcrypt:0.4")
 
     // JSON Schema validation
-    implementation("org.everit.json:org.everit.json.schema:1.3.0")
+    implementation("org.everit.json:org.everit.json.schema:1.5.1")
 
     // Ktor dependencies
     implementation("io.ktor:ktor-server-core:$ktorVersion")
