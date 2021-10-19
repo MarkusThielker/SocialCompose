@@ -71,7 +71,7 @@ class UserDao(private val db: Database) : Closeable {
     fun getUserByUsername(username: String): UserPrivate? = transaction(db) {
 
         val singleOrNull = UserMo
-            .select { UserMo.username eq username }
+            .select { UserMo.username.lowerCase() eq username.lowercase() }
             .map {
                 UserPrivate(
                     it[UserMo.userId],
@@ -99,7 +99,7 @@ class UserDao(private val db: Database) : Closeable {
 
     fun emailTaken(email: String): Boolean = transaction(db) {
 
-        val singleOrNull = UserMo.select { UserMo.email.lowerCase() eq email }.singleOrNull()
+        val singleOrNull = UserMo.select { UserMo.email.lowerCase() eq email.lowercase() }.singleOrNull()
         singleOrNull != null
     }
 
