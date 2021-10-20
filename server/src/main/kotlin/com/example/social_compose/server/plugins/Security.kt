@@ -59,7 +59,7 @@ fun Application.configureSecurity() {
         post("api/v1/user/create") {
 
             val content = call.receiveText()
-            val userRegistration = Json.decodeFromString<UserRegistration>(content)
+            val user = Json.decodeFromString<UserRegistration>(content)
 
             val file = File("src/main/resources/registration.schema.json")
             val jsonTokener = JSONTokener(file.bufferedReader())
@@ -72,31 +72,43 @@ fun Application.configureSecurity() {
                 schema.validate(JSONObject(content))
 
                 // check for duplicate username
-                if (userDao.usernameTaken(userRegistration.username)) {
-                    call.respond(HttpStatusCode.Conflict, "Username is already used by another account")
+                if (userDao.usernameTaken(user.username)) {
+                    call.respond(
+                        status = HttpStatusCode.Conflict,
+                        message = "Username is already used by another account",
+                    )
                     return@post
                 }
 
                 // check for duplicate email
-                if (userDao.emailTaken(userRegistration.email)) {
-                    call.respond(HttpStatusCode.Conflict, "Email is already used by another account")
+                if (userDao.emailTaken(user.email)) {
+                    call.respond(
+                        status = HttpStatusCode.Conflict,
+                        message = "Email is already used by another account",
+                    )
                     return@post
                 }
 
                 // add item to database
-                userDao.createUser(userRegistration)
+                userDao.createUser(user)
 
                 // check for created item
-                if (userDao.usernameTaken(userRegistration.username) && userDao.emailTaken(userRegistration.email))
-                    call.respond(HttpStatusCode.Accepted, "User has been created")
+                if (userDao.usernameTaken(user.username) && userDao.emailTaken(user.email))
+                    call.respond(
+                        status = HttpStatusCode.Accepted,
+                        message = "User has been created",
+                    )
                 else
-                    call.respond(HttpStatusCode.InternalServerError, "User couldn't be created")
+                    call.respond(
+                        status = HttpStatusCode.InternalServerError,
+                        message = "User couldn't be created"
+                    )
 
             } catch (ve: ValidationException) {
 
                 call.respond(
-                    HttpStatusCode.Conflict,
-                    "The data sent for registration doesn't match the format requirements"
+                    status = HttpStatusCode.BadRequest,
+                    message = "The data sent for registration doesn't match the format requirements",
                 )
             }
         }
@@ -106,16 +118,22 @@ fun Application.configureSecurity() {
             val content = call.receiveText()
             val credentials = Json.decodeFromString<AuthCredentials>(content)
 
-            val user = userDao.getUserByUsername(credentials.username)
+            val user = userDao.getUserByUsername(username = credentials.username)
 
             if (user == null) {
-                call.respond(HttpStatusCode.Unauthorized, "Username not found")
+                call.respond(
+                    status = HttpStatusCode.Unauthorized,
+                    message = "Username not found",
+                )
                 return@post
             }
 
             val isValid = BCrypt.checkpw(credentials.password, user.password)
             if (!isValid) {
-                call.respond(HttpStatusCode.Unauthorized, "Password not correct")
+                call.respond(
+                    status = HttpStatusCode.Unauthorized,
+                    message = "Password not correct",
+                )
                 return@post
             }
 
@@ -127,7 +145,10 @@ fun Application.configureSecurity() {
                 .withExpiresAt(Date(System.currentTimeMillis() + validity))
                 .sign(Algorithm.HMAC256(secret))
 
-            call.respondText(Json.encodeToString(AuthToken(token)), ContentType.Application.Json)
+            call.respondText(
+                text = Json.encodeToString(AuthToken(token)),
+                contentType = ContentType.Application.Json,
+            )
         }
 
         authenticate("jwt-auth") {
@@ -140,10 +161,10 @@ fun Application.configureSecurity() {
                 val expiresAt = principal.expiresAt?.time?.minus(System.currentTimeMillis())
 
                 if (issuedAt != null && expiresAt != null)
-                    call.respondText(
-                        "Hello, $username! Your token was issued at ${Timestamp(issuedAt)} and will expire " +
-                                "in ${(expiresAt / 1000) / 60} minutes and ${(expiresAt / 1000) % 60} seconds"
-                    )
+                    call.respondText {
+                        "Hello, $username! Your token was issued at ${Timestamp(issuedAt)} and will expire in " +
+                                "${(expiresAt / 1000) / 60} minutes and ${(expiresAt / 1000) % 60} seconds"
+                    }
                 else
                     call.respondText { "Something with the times stored in the token went wrong" }
             }
