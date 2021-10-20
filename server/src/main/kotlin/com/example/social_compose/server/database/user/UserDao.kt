@@ -91,6 +91,15 @@ class UserDao(private val db: Database) : Closeable {
         singleOrNull
     }
 
+    fun getIdByUsername(username: String): Long? = transaction(db) {
+
+        val singleOrNull = UserMo
+            .select { UserMo.username.lowerCase() eq username.lowercase() }
+            .map { it[UserMo.userId] }
+            .singleOrNull()
+        singleOrNull
+    }
+
     fun usernameTaken(username: String): Boolean = transaction(db) {
 
         val singleOrNull = UserMo.select { UserMo.username.lowerCase() eq username.lowercase() }.singleOrNull()
