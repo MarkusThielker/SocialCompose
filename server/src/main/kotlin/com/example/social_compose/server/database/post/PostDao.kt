@@ -1,5 +1,6 @@
 package com.example.social_compose.server.database.post
 
+import com.example.social_compose.server.ServerConfig.postDao
 import com.example.social_compose.server.ServerConfig.userDao
 import com.example.social_compose.shared.post.PostGet
 import com.example.social_compose.shared.post.PostPost
@@ -37,10 +38,11 @@ class PostDao(private val db: Database) : Closeable {
             .map {
 
                 val user = userDao.getUserById(it[PostMo.userId])?.toPublicUser()
+                val parent = if (it[PostMo.parentId] != null) postDao.getPostById(it[PostMo.parentId]!!) else null
 
                 PostGet(
                     it[PostMo.postId],
-                    it[PostMo.parentId],
+                    parent,
                     user,
                     it[PostMo.content],
                     it[PostMo.created_at].toString(),
@@ -66,10 +68,11 @@ class PostDao(private val db: Database) : Closeable {
             .map {
 
                 val user = userDao.getUserByUsername(username)?.toPublicUser()
+                val parent = if (it[PostMo.parentId] != null) postDao.getPostById(it[PostMo.parentId]!!) else null
 
                 PostGet(
                     it[PostMo.postId],
-                    it[PostMo.parentId],
+                    parent,
                     user,
                     it[PostMo.content],
                     it[PostMo.created_at].toString(),

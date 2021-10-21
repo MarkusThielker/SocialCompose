@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PostGet(
     val postId: Long,
-    val parentId: Long?,
+    val parentId: PostGet?,
     val user: UserPublic?,
     val content: String,
     val created_at: String,
