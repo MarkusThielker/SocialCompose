@@ -5,6 +5,7 @@ val logbackVersion: String by project
 plugins {
     application
     kotlin("jvm")
+    id("com.github.johnrengelman.shadow") version "7.0.0"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.5.31"
 }
 
@@ -41,4 +42,12 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     testImplementation("io.ktor:ktor-server-tests:$ktorVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
+}
+
+tasks {
+    shadowJar {
+        manifest {
+            attributes(Pair("Main-Class", "com.example.social_compose.server.ApplicationKt"))
+        }
+    }
 }
