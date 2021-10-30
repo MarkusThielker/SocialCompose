@@ -61,7 +61,7 @@ fun Application.configureSecurity() {
             val content = call.receiveText()
             val user = Json.decodeFromString<UserRegistration>(content)
 
-            val file = File("src/main/resources/registration.schema.json")
+            val file = File("server/src/main/resources/registration.schema.json")
             val jsonTokener = JSONTokener(file.bufferedReader())
             val jsonObject = JSONObject(jsonTokener)
             val schema = SchemaLoader.load(jsonObject)
