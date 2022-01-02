@@ -8,6 +8,15 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.mindrot.jbcrypt.BCrypt
 
+/**
+ * The user's data access object (DAO) offers methods to access the user table.
+ * The creation of the DAO triggers a table creation, if no table following the [UserMo] schema exists.
+ *
+ * @param db the database to read and write user's from/to
+ *
+ * @author Markus Thielker
+ *
+ * */
 class UserDao(private val db: Database) : Closeable {
 
     init {

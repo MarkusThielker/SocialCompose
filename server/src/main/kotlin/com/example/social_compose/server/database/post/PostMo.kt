@@ -5,6 +5,13 @@ import org.jetbrains.exposed.sql.Table
 import org.joda.time.DateTime
 import org.joda.time.Instant
 
+/**
+ * The schema for the database's post table.
+ * Create a [PostDao] instance for your database to set up the table.
+ *
+ * @author Markus Thielker
+ *
+ * */
 object PostMo : Table(name = postTableName) {
     val postId = long("postId").autoIncrement().primaryKey()
     val parentId = long("parentId").nullable()

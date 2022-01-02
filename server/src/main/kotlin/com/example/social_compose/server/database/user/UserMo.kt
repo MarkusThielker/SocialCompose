@@ -5,6 +5,13 @@ import org.jetbrains.exposed.sql.Table
 import org.joda.time.DateTime
 import org.joda.time.Instant
 
+/**
+ * The schema for the database's user table.
+ * Create a [UserDao] instance for your database to set up the table.
+ *
+ * @author Markus Thielker
+ *
+ * */
 object UserMo : Table(name = userTableName) {
     val userId = long("userId").autoIncrement().uniqueIndex("UX_USER_TABLE_userId").primaryKey()
     val username = varchar("username", 16).uniqueIndex("UX_USER_TABLE_username")
