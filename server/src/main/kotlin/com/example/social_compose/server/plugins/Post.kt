@@ -31,6 +31,13 @@ fun Application.configurePost() {
 
         authenticate("jwt-auth") {
 
+            /**
+             * Process calls to the [root route][Root].
+             * The response is a list of posts, optionally filtered for the passed user.
+             *
+             * @author Markus Thielker
+             *
+             * */
             get<Root> { request ->
 
                 val userPosts = ServerConfig.postDao.getPostsByIndex(
@@ -43,6 +50,13 @@ fun Application.configurePost() {
                 )
             }
 
+            /**
+             * Processes calls to the [post route][Post].
+             * The request contains the postId.
+             *
+             * @author Markus Thielker
+             *
+             * */
             get<Post> { request ->
 
                 val post = ServerConfig.postDao.getPostById(request.postId)
@@ -52,14 +66,24 @@ fun Application.configurePost() {
                 )
             }
 
+            /**
+             * Processes calls to the "create post" api endpoint.
+             * Confirms validity of the passed json object and inserts it into db if valid.
+             *
+             * @author Markus Thielker
+             *
+             * */
             post("/api/v1/post/create") {
 
+                // read json content and parse to post object
                 val json = call.receiveText()
                 val post = Json.decodeFromString<PostPost>(json)
 
+                // read jwt principal and get tokens userId
                 val principal = call.principal<JWTPrincipal>()
                 val userId = principal!!.payload.getClaim("userId").asLong()
 
+                // cancel and return if parentId is invalid
                 if (post.parentId != null && !ServerConfig.postDao.isValidPostId(post.parentId!!)) {
                     call.respond(
                         status = HttpStatusCode.BadRequest,
@@ -76,6 +100,7 @@ fun Application.configurePost() {
                     return@post
                 }
 
+                // cancel and return if post is too long
                 if (post.content.length > 280) {
                     call.respond(
                         status = HttpStatusCode.BadRequest,
@@ -84,8 +109,10 @@ fun Application.configurePost() {
                     return@post
                 }
 
+                // insert post into database
                 ServerConfig.postDao.createPost(post)
 
+                // respond with success
                 call.respond(
                     status = HttpStatusCode.Accepted,
                     message = "Post has been created",
