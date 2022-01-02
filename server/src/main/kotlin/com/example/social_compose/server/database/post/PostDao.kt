@@ -100,7 +100,7 @@ class PostDao(private val db: Database) : Closeable {
      * */
     fun getPostsByIndex(index: Int = 0, username: String = ""): List<PostGet> = transaction(db) {
 
-        val usernamePassed = username.isNotEmpty()
+        val usernamePassed = username.isNotBlank()
         var userId: Long = -1L
 
         if (usernamePassed) {
