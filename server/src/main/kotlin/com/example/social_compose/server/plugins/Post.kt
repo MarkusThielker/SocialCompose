@@ -16,6 +16,10 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 @KtorExperimentalLocationsAPI
+@Location("/{username?}/{page?}")
+data class Root(val username: String?, val page: Int?)
+
+@KtorExperimentalLocationsAPI
 @Location("/post/{postId}")
 data class Post(val postId: Long)
 
@@ -27,9 +31,12 @@ fun Application.configurePost() {
 
         authenticate("jwt-auth") {
 
-            get("/") {
+            get<Root> { request ->
 
-                val userPosts = ServerConfig.postDao.getPostsByIndex()
+                val userPosts = ServerConfig.postDao.getPostsByIndex(
+                    index = (request.page ?: 0) * 10,
+                    username = request.username ?: "",
+                )
                 call.respondText(
                     text = Json.encodeToString(userPosts),
                     contentType = ContentType.Application.Json,
