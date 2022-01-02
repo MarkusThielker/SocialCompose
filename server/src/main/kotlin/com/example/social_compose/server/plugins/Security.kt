@@ -128,8 +128,7 @@ fun Application.configureSecurity() {
                 return@post
             }
 
-            val isValid = BCrypt.checkpw(credentials.password, user.password)
-            if (!isValid) {
+            if (!BCrypt.checkpw(credentials.password, user.password)) {
                 call.respond(
                     status = HttpStatusCode.Unauthorized,
                     message = "Password not correct",
