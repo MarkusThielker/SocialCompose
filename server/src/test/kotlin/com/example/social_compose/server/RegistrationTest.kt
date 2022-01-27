@@ -42,7 +42,7 @@ class RegistrationTest {
 
             val userRegistration = UserRegistration(
                 "username",
-                "mail@example.com",
+                "max.mustermann@example.com",
                 "password",
                 "alias",
             )
@@ -71,7 +71,7 @@ class RegistrationTest {
             handleRequest(HttpMethod.Post, "/api/v1/user/create") {
                 setBody(Json.encodeToString(userRegistration))
             }.apply {
-                assertEquals(HttpStatusCode.Conflict, response.status())
+                assertEquals(HttpStatusCode.BadRequest, response.status())
                 assertEquals(
                     "The data sent for registration doesn't match the format requirements", response.content
                 )
@@ -94,7 +94,7 @@ class RegistrationTest {
             handleRequest(HttpMethod.Post, "/api/v1/user/create") {
                 setBody(Json.encodeToString(userRegistration))
             }.apply {
-                assertEquals(HttpStatusCode.Conflict, response.status())
+                assertEquals(HttpStatusCode.BadRequest, response.status())
                 assertEquals(
                     "The data sent for registration doesn't match the format requirements", response.content
                 )
@@ -117,7 +117,7 @@ class RegistrationTest {
             handleRequest(HttpMethod.Post, "/api/v1/user/create") {
                 setBody(Json.encodeToString(userRegistration))
             }.apply {
-                assertEquals(HttpStatusCode.Conflict, response.status())
+                assertEquals(HttpStatusCode.BadRequest, response.status())
                 assertEquals(
                     "The data sent for registration doesn't match the format requirements", response.content
                 )
@@ -140,7 +140,7 @@ class RegistrationTest {
             handleRequest(HttpMethod.Post, "/api/v1/user/create") {
                 setBody(Json.encodeToString(userRegistration))
             }.apply {
-                assertEquals(HttpStatusCode.Conflict, response.status())
+                assertEquals(HttpStatusCode.BadRequest, response.status())
                 assertEquals(
                     "The data sent for registration doesn't match the format requirements", response.content
                 )
