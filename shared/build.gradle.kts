@@ -2,7 +2,7 @@ val ktorVersion: String by project
 
 plugins {
     kotlin("jvm")
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.5.31"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.6.10"
 }
 
 group = "com.example.social_compose.shared"

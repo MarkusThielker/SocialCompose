@@ -6,7 +6,7 @@ plugins {
     application
     kotlin("jvm")
     id("com.github.johnrengelman.shadow") version "7.0.0"
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.5.31"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.6.10"
 }
 
 group = "com.example.social_compose.server"
