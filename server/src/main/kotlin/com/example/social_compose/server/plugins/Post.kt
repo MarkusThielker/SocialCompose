@@ -84,7 +84,7 @@ fun Application.configurePost() {
                 val userId = principal!!.payload.getClaim("userId").asLong()
 
                 // cancel and return if parentId is invalid
-                if (!ServerConfig.postDao.isValidPostId(post.parentId ?: -1)) {
+                if (post.parentId != null && !ServerConfig.postDao.isValidPostId(post.parentId!!)) {
                     call.respond(
                         status = HttpStatusCode.BadRequest,
                         message = "A post with postId ${post.parentId} does not exist",
