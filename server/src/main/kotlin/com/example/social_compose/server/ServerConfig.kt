@@ -7,7 +7,7 @@ import org.jetbrains.exposed.sql.Database
 object ServerConfig {
 
     // server setup
-    const val host = "localhost"
+    const val host = "0.0.0.0"
     const val port = 8080
 
     // authentication
@@ -23,9 +23,9 @@ object ServerConfig {
     lateinit var userDao: UserDao
 
     val mariaDB = Database.connect(
-        url = "jdbc:mariadb://server.markus-thielker.de:3306/social_compose",
+        url = "jdbc:mariadb://mariadb:3306/social_compose",
         driver = "org.mariadb.jdbc.Driver",
-        user = "***",
-        password = "***"
+        user = "root",
+        password = "password",
     )
 }

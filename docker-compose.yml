@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+
+  mariadb:
+    image: mariadb:latest
+    ports:
+      - "3306:3306"
+    networks:
+      - sc_network
+    volumes:
+      - mariadb-data:/var/lib/mysql
+      - mariadb-logs:/var/log/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: "password"
+      MARIADB_DATABASE: "social_compose"
+
+  ktor:
+    build: .
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    networks:
+      - sc_network
+    volumes:
+      - ktor-data:/resources
+    depends_on:
+      - mariadb
+
+volumes:
+  mariadb-data:
+  mariadb-logs:
+  ktor-data:
+
+networks:
+  sc_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.0.0.1/16
