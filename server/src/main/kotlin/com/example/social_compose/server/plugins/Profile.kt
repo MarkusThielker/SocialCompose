@@ -2,11 +2,16 @@ package com.example.social_compose.server.plugins
 
 import com.example.social_compose.server.ServerConfig.postDao
 import com.example.social_compose.server.ServerConfig.userDao
-import io.ktor.application.*
-import io.ktor.http.*
-import io.ktor.locations.*
-import io.ktor.response.*
-import io.ktor.routing.*
+import io.ktor.application.Application
+import io.ktor.application.call
+import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
+import io.ktor.locations.KtorExperimentalLocationsAPI
+import io.ktor.locations.Location
+import io.ktor.locations.get
+import io.ktor.response.respond
+import io.ktor.response.respondText
+import io.ktor.routing.routing
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

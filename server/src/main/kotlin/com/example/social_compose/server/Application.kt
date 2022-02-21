@@ -4,12 +4,17 @@ import com.example.social_compose.server.plugins.configureDatabase
 import com.example.social_compose.server.plugins.configurePost
 import com.example.social_compose.server.plugins.configureProfile
 import com.example.social_compose.server.plugins.configureSecurity
-import io.ktor.application.*
-import io.ktor.features.*
-import io.ktor.locations.*
-import io.ktor.request.*
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
+import io.ktor.application.install
+import io.ktor.features.CallLogging
+import io.ktor.features.ContentNegotiation
+import io.ktor.locations.KtorExperimentalLocationsAPI
+import io.ktor.locations.Locations
+import io.ktor.request.httpMethod
+import io.ktor.request.uri
+import io.ktor.server.engine.applicationEngineEnvironment
+import io.ktor.server.engine.connector
+import io.ktor.server.engine.embeddedServer
+import io.ktor.server.netty.Netty
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 

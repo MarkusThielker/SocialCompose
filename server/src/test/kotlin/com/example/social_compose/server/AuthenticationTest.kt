@@ -4,8 +4,11 @@ import com.example.social_compose.server.plugins.configureDatabase
 import com.example.social_compose.server.plugins.configureSecurity
 import com.example.social_compose.shared.AuthCredentials
 import com.example.social_compose.shared.AuthToken
-import io.ktor.http.*
-import io.ktor.server.testing.*
+import io.ktor.http.HttpMethod
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.testing.handleRequest
+import io.ktor.server.testing.setBody
+import io.ktor.server.testing.withTestApplication
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json

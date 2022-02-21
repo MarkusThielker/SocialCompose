@@ -3,8 +3,11 @@ package com.example.social_compose.server
 import com.example.social_compose.server.plugins.configureDatabase
 import com.example.social_compose.server.plugins.configureSecurity
 import com.example.social_compose.shared.user.UserRegistration
-import io.ktor.http.*
-import io.ktor.server.testing.*
+import io.ktor.http.HttpMethod
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.testing.handleRequest
+import io.ktor.server.testing.setBody
+import io.ktor.server.testing.withTestApplication
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

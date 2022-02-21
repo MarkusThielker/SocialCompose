@@ -3,9 +3,15 @@ package com.example.social_compose.server.database.user
 import com.example.social_compose.shared.user.UserPrivate
 import com.example.social_compose.shared.user.UserRegistration
 import com.example.social_compose.shared.user.UserUpdate
-import io.ktor.utils.io.core.*
-import org.jetbrains.exposed.sql.*
+import io.ktor.utils.io.core.Closeable
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.deleteWhere
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.lowerCase
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.update
 import org.mindrot.jbcrypt.BCrypt
 
 /**

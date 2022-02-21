@@ -4,8 +4,13 @@ import com.example.social_compose.server.ServerConfig.postDao
 import com.example.social_compose.server.ServerConfig.userDao
 import com.example.social_compose.shared.post.PostGet
 import com.example.social_compose.shared.post.PostPost
-import io.ktor.utils.io.core.*
-import org.jetbrains.exposed.sql.*
+import io.ktor.utils.io.core.Closeable
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.SortOrder
+import org.jetbrains.exposed.sql.deleteWhere
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
 /**
