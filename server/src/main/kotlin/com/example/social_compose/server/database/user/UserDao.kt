@@ -127,5 +127,11 @@ class UserDao(private val db: Database) : Closeable {
         singleOrNull != null
     }
 
+    fun getUserCount(): Int = transaction(db) {
+
+        val userCount = UserMo.select { UserMo.userId neq -1 }.count()
+        userCount
+    }
+
     override fun close() {}
 }

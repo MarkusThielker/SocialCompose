@@ -50,6 +50,7 @@ fun main() {
             install(Resources)
 
             configureDatabase()
+            configureFeed()
             configureSecurity()
             configureProfile()
             configurePost()
