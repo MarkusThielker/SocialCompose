@@ -22,10 +22,6 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 @Serializable
-@Resource("/{username?}/{page?}")
-data class Root(val username: String?, val page: Int?)
-
-@Serializable
 @Resource("/post/{postId}")
 data class Post(val postId: Long)
 
@@ -34,25 +30,6 @@ fun Application.configurePost() {
     routing {
 
         authenticate("jwt-auth") {
-
-            /**
-             * Process calls to the [root route][Root].
-             * The response is a list of posts, optionally filtered for the passed user.
-             *
-             * @author Markus Thielker
-             *
-             * */
-            get<Root> { request ->
-
-                val userPosts = ServerConfig.postDao.getPostsByIndex(
-                    index = (request.page ?: 0) * 10,
-                    username = request.username ?: "",
-                )
-                call.respondText(
-                    text = Json.encodeToString(userPosts),
-                    contentType = ContentType.Application.Json,
-                )
-            }
 
             /**
              * Processes calls to the [post route][Post].
