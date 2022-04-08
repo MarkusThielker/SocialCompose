@@ -1,6 +1,7 @@
 package com.example.social_compose.server
 
 import com.example.social_compose.server.plugins.configureDatabase
+import com.example.social_compose.server.plugins.configureFeed
 import com.example.social_compose.server.plugins.configurePost
 import com.example.social_compose.server.plugins.configureProfile
 import com.example.social_compose.server.plugins.configureSecurity
