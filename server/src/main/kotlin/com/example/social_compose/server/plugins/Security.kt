@@ -147,11 +147,11 @@ fun Application.configureSecurity() {
                 .withClaim("userId", user.userId)
                 .withClaim("username", user.username)
                 .withIssuedAt(Date(System.currentTimeMillis()))
-                .withExpiresAt(Date(System.currentTimeMillis() + validity))
-                .sign(Algorithm.HMAC256(secret))
+
+            if (!credentials.requestPermanent) token.withExpiresAt(Date(System.currentTimeMillis() + validity))
 
             call.respondText(
-                text = Json.encodeToString(AuthToken(token)),
+                text = Json.encodeToString(AuthToken(token.sign(Algorithm.HMAC256(secret)))),
                 contentType = ContentType.Application.Json,
             )
         }
@@ -165,13 +165,14 @@ fun Application.configureSecurity() {
                 val issuedAt = principal.issuedAt?.time
                 val expiresAt = principal.expiresAt?.time?.minus(System.currentTimeMillis())
 
-                if (issuedAt != null && expiresAt != null)
-                    call.respondText {
-                        "Hello, $username! Your token was issued at ${Timestamp(issuedAt)} and will expire in " +
-                                "${(expiresAt / 1000) / 60} minutes and ${(expiresAt / 1000) % 60} seconds"
-                    }
-                else
-                    call.respondText { "Something with the times stored in the token went wrong" }
+                val expiration = when (expiresAt != null) {
+                    true -> "will expire in ${(expiresAt / 1000) / 60} minutes and ${(expiresAt / 1000) % 60} seconds"
+                    false -> "is a a permanent token (won't expire)"
+                }
+
+                call.respondText {
+                    "Hello, $username! Your token was issued at ${Timestamp(issuedAt ?: -1L)} and $expiration"
+                }
             }
         }
     }

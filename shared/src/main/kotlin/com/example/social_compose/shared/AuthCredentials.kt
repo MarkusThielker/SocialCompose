@@ -6,4 +6,5 @@ import kotlinx.serialization.Serializable
 data class AuthCredentials(
     val username: String,
     val password: String,
+    val requestPermanent: Boolean = false,
 )
