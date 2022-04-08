@@ -4,22 +4,18 @@ import com.example.social_compose.server.plugins.configureDatabase
 import com.example.social_compose.server.plugins.configurePost
 import com.example.social_compose.server.plugins.configureProfile
 import com.example.social_compose.server.plugins.configureSecurity
-import io.ktor.application.install
-import io.ktor.features.CallLogging
-import io.ktor.features.ContentNegotiation
-import io.ktor.locations.KtorExperimentalLocationsAPI
-import io.ktor.locations.Locations
-import io.ktor.request.httpMethod
-import io.ktor.request.uri
+import io.ktor.server.application.install
 import io.ktor.server.engine.applicationEngineEnvironment
 import io.ktor.server.engine.connector
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
-import kotlinx.serialization.ExperimentalSerializationApi
+import io.ktor.server.plugins.callloging.CallLogging
+import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.server.request.httpMethod
+import io.ktor.server.request.uri
+import io.ktor.server.resources.Resources
 import kotlinx.serialization.json.Json
 
-@KtorExperimentalLocationsAPI
-@ExperimentalSerializationApi
 fun main() {
 
     val environment = applicationEngineEnvironment {
@@ -51,7 +47,7 @@ fun main() {
                 }
             }
 
-            install(Locations)
+            install(Resources)
 
             configureDatabase()
             configureSecurity()

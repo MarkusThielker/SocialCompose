@@ -26,22 +26,34 @@ dependencies {
     implementation("org.mariadb.jdbc:mariadb-java-client:2.7.4")
     implementation("mysql:mysql-connector-java:8.0.26")
 
+    // HTML
+    implementation("io.ktor:ktor-server-freemarker:$ktorVersion")
+
     // Encryption
     implementation("org.mindrot:jbcrypt:0.4")
 
     // JSON Schema validation
     implementation("org.everit.json:org.everit.json.schema:1.5.1")
 
-    // Ktor dependencies
+    // Ktor core
     implementation("io.ktor:ktor-server-core:$ktorVersion")
-    implementation("io.ktor:ktor-auth:$ktorVersion")
-    implementation("io.ktor:ktor-auth-jwt:$ktorVersion")
-    implementation("io.ktor:ktor-locations:$ktorVersion")
-    implementation("io.ktor:ktor-serialization:$ktorVersion")
     implementation("io.ktor:ktor-server-netty:$ktorVersion")
+    implementation("io.ktor:ktor-server-resources:$ktorVersion")
+    implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+
+    // Ktor authentication
+    implementation("io.ktor:ktor-server-auth:$ktorVersion")
+    implementation("io.ktor:ktor-server-auth-jwt:$ktorVersion")
+
+    // Ktor logging
+    implementation("io.ktor:ktor-server-call-logging:$ktorVersion")
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
-    testImplementation("io.ktor:ktor-server-tests:$ktorVersion")
-    testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
+
+    // Ktor testing
+    testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$ktorVersion")
+
 }
 
 tasks {

@@ -3,8 +3,8 @@ package com.example.social_compose.server.plugins
 import com.example.social_compose.server.ServerConfig
 import com.example.social_compose.server.database.post.PostDao
 import com.example.social_compose.server.database.user.UserDao
-import io.ktor.application.Application
-import io.ktor.application.log
+import io.ktor.server.application.Application
+import io.ktor.server.application.log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

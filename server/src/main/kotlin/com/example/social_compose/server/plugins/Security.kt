@@ -9,22 +9,21 @@ import com.example.social_compose.server.ServerConfig.validity
 import com.example.social_compose.shared.AuthCredentials
 import com.example.social_compose.shared.AuthToken
 import com.example.social_compose.shared.user.UserRegistration
-import io.ktor.application.Application
-import io.ktor.application.call
-import io.ktor.auth.authenticate
-import io.ktor.auth.authentication
-import io.ktor.auth.jwt.JWTPrincipal
-import io.ktor.auth.jwt.jwt
-import io.ktor.auth.principal
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-import io.ktor.request.receiveText
-import io.ktor.response.respond
-import io.ktor.response.respondText
-import io.ktor.routing.get
-import io.ktor.routing.post
-import io.ktor.routing.routing
-import kotlinx.serialization.ExperimentalSerializationApi
+import io.ktor.server.application.Application
+import io.ktor.server.application.call
+import io.ktor.server.auth.authenticate
+import io.ktor.server.auth.authentication
+import io.ktor.server.auth.jwt.JWTPrincipal
+import io.ktor.server.auth.jwt.jwt
+import io.ktor.server.auth.principal
+import io.ktor.server.request.receiveText
+import io.ktor.server.response.respond
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.get
+import io.ktor.server.routing.post
+import io.ktor.server.routing.routing
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -37,7 +36,6 @@ import java.io.File
 import java.sql.Date
 import java.sql.Timestamp
 
-@ExperimentalSerializationApi
 fun Application.configureSecurity() {
 
     authentication {

@@ -9,5 +9,5 @@ group = "com.example.social_compose.shared"
 version = "1.0"
 
 dependencies {
-    implementation("io.ktor:ktor-serialization:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
 }

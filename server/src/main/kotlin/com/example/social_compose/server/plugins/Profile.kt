@@ -2,30 +2,28 @@ package com.example.social_compose.server.plugins
 
 import com.example.social_compose.server.ServerConfig.postDao
 import com.example.social_compose.server.ServerConfig.userDao
-import io.ktor.application.Application
-import io.ktor.application.call
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-import io.ktor.locations.KtorExperimentalLocationsAPI
-import io.ktor.locations.Location
-import io.ktor.locations.get
-import io.ktor.response.respond
-import io.ktor.response.respondText
-import io.ktor.routing.routing
-import kotlinx.serialization.ExperimentalSerializationApi
+import io.ktor.resources.Resource
+import io.ktor.server.application.Application
+import io.ktor.server.application.call
+import io.ktor.server.resources.get
+import io.ktor.server.response.respond
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.routing
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-@KtorExperimentalLocationsAPI
-@Location("/{username}")
+@Serializable
+@Resource("/{username}")
 class Profile(val username: String) {
 
-    @Location("/feed/{page?}")
+    @Serializable
+    @Resource("/feed/{page?}")
     data class Posts(val profile: Profile, val page: Int = 0)
 }
 
-@KtorExperimentalLocationsAPI
-@ExperimentalSerializationApi
 fun Application.configureProfile() {
 
     routing {

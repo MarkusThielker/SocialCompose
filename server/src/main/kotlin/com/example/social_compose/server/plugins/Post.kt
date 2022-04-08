@@ -2,36 +2,33 @@ package com.example.social_compose.server.plugins
 
 import com.example.social_compose.server.ServerConfig
 import com.example.social_compose.shared.post.PostPost
-import io.ktor.application.Application
-import io.ktor.application.call
-import io.ktor.auth.authenticate
-import io.ktor.auth.jwt.JWTPrincipal
-import io.ktor.auth.principal
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-import io.ktor.locations.KtorExperimentalLocationsAPI
-import io.ktor.locations.Location
-import io.ktor.locations.get
-import io.ktor.request.receiveText
-import io.ktor.response.respond
-import io.ktor.response.respondText
-import io.ktor.routing.post
-import io.ktor.routing.routing
-import kotlinx.serialization.ExperimentalSerializationApi
+import io.ktor.resources.Resource
+import io.ktor.server.application.Application
+import io.ktor.server.application.call
+import io.ktor.server.auth.authenticate
+import io.ktor.server.auth.jwt.JWTPrincipal
+import io.ktor.server.auth.principal
+import io.ktor.server.request.receiveText
+import io.ktor.server.resources.get
+import io.ktor.server.response.respond
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.post
+import io.ktor.server.routing.routing
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-@KtorExperimentalLocationsAPI
-@Location("/{username?}/{page?}")
+@Serializable
+@Resource("/{username?}/{page?}")
 data class Root(val username: String?, val page: Int?)
 
-@KtorExperimentalLocationsAPI
-@Location("/post/{postId}")
+@Serializable
+@Resource("/post/{postId}")
 data class Post(val postId: Long)
 
-@KtorExperimentalLocationsAPI
-@ExperimentalSerializationApi
 fun Application.configurePost() {
 
     routing {
